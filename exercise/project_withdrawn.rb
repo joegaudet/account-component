@@ -16,7 +16,7 @@ account = Account.new
 
 puts "Account balance: $#{account.balance}"
 
-EventSource::Postgres::Read.(stream_name) do |message_data|
+MessageStore::Postgres::Read.(stream_name) do |message_data|
   Projection.(account, message_data)
 end
 

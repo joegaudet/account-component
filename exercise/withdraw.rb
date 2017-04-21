@@ -11,12 +11,12 @@ command_stream_name = "account:command-#{account_id}"
 
 Messaging::Postgres::Write.(withdraw, command_stream_name)
 
-EventSource::Postgres::Read.(command_stream_name) do |message_data|
+MessageStore::Postgres::Read.(command_stream_name) do |message_data|
   Handlers::Commands.(message_data)
 end
 
 stream_name = "account-#{account_id}"
 
-EventSource::Postgres::Read.(stream_name) do |message_data|
+MessageStore::Postgres::Read.(stream_name) do |message_data|
   pp message_data.data
 end
